@@ -1,0 +1,57 @@
+# ATM simulation
+# User data (stored in a dictionary)
+
+users = {
+    "Darrel":{"pin": 1234, "balance":{"KSh":20000, "usd":200}},
+    "Norman":{"pin": 2345, "balance":{"KSh":39999, "usd":300}},
+    "Brian":{"pin": 4567, "balance":{"KSh":40000, "usd":500}},
+    "Christine":{"pin": 7689, "balance":{"KSh":50000, "usd":400}},
+    "Hilda": {"pin": 6789, "balance":{"KSh":60000, "usd":600}}
+}
+
+# Login function
+def login():
+    username = input("Enter your username: ")
+    pin = int(input("Enter your PIN: "))
+    if username in users and users[username]['pin'] == pin:
+        return username
+    else:
+        print("Invalid credentials. Please try again.")
+        return None
+
+# Withdraw function
+def withdraw(username):
+    amount = float(input("Enter the withdrawal amount (KSh): "))
+    if amount <= users[username]['balance']['KSh']:
+        users[username]['balance']['KSh'] -= amount
+        print(f"Withdrawal successful. New balance: {users[username]['balance']['KSh']} KSh")
+    else:
+        print("Insufficient funds.")
+
+# Check balance function
+def check_balance(username):
+    print(f"Your balance: {users[username]['balance']['KSh']} KSh")
+
+# Main program
+def main():
+    print("Welcome to the ATM!")
+    username = login()
+    if username:
+        while True:
+            print("\nOptions:")
+            print("1. Withdraw money")
+            print("2. Check balance")
+            print("3. Quit")
+            choice = input("Enter your choice (1/2/3): ")
+            if choice == '1':
+                withdraw(username)
+            elif choice == '2':
+                check_balance(username)
+            elif choice == '3':
+                print("Thank you for using the ATM. Have a great day!")
+                break
+            else:
+                print("Invalid choice. Please select 1, 2, or 3.")
+
+if _name_ == "_main_":
+    main()
